@@ -1,7 +1,8 @@
 /*
  * mcp.h
  * 
- * Copyright 2013 Tobias Gall <toga@tu-chemnitz.eu>
+ * Created by Tobias Gall <toga@tu-chemnitz.eu>
+ * Based on Adafruit's pythen code for CharLCDPlate
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
