@@ -39,6 +39,12 @@
 #define INPUT   1
     
 // LED backlight
+#define RED  0x01
+#define GREEN  0x02
+#define BLUE  0x04
+#define YELLOW  0x03
+#define TEAL  0x06
+#define VIOLET  0x05
 #define ON   0x07
 #define OFF   0x0
 
