@@ -28,11 +28,17 @@
 
 #include "lcd.c"
 
-#define ADDR	0x20
+/* 
+ * get i2c address -> 	sudo i2cdetect -y 0 - rpi rev 1
+ * 						sudo i2cdetect -y 1 - rpi rev 2
+ */
+
+#define ADDR 0x20 // i2c Address
 
 int main(void)
 { 
 	lcdSetup(ADDR, 0);
+	/* i2c Address an busnum <- 0 (rev 1) | 1 (rev 2) */
 	lcdBacklight(ON);
 	lcdClear();
 	
