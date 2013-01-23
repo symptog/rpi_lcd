@@ -40,8 +40,8 @@ int fd;
 
 void rpiI2cSetup(__u8, __u8);
 void rpiI2cWrite(__u8, __u8);
-void rpiI2cClose(void);
 __u8 rpiI2cRead8(__u8);
 __u16 rpiI2cRead16(__u8);
+void rpiI2cClose(void);
 
 #endif

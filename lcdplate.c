@@ -24,7 +24,9 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "lcd.c"
 
@@ -35,43 +37,118 @@
 
 #define ADDR 0x20 // i2c Address
 
+int ctr=2;
+int backl;
+void initMode(void);
+void textMode(int);
+
+void toggleBacklight(void)
+{
+	if(backl==1) {
+		lcdBacklight(OFF);
+		backl=0;
+	}
+	else {
+		lcdBacklight(ON);
+		backl=1;
+	}
+	usleep(10000);
+}
+
+int interrupt4(void)
+{
+	return lcdButtonPressed(RIGHT) || lcdButtonPressed(LEFT) || lcdButtonPressed(UP) || lcdButtonPressed(DOWN);
+}
+
+int interrupt2(void)
+{
+	return lcdButtonPressed(UP) || lcdButtonPressed(DOWN);
+}
+
+void initMode(void)
+{
+	int i=0;
+	while(1) {
+		textMode(i);
+		if(lcdButtonPressed(RIGHT)) {
+			if(i==ctr-1) i=0;
+			else i+=1;
+		}
+		if(lcdButtonPressed(LEFT)){
+			if(i==0) i=ctr-1;
+			else i-=1;
+		}
+	}
+}
+
+void textMode(int num){
+	switch(num) {
+		case 0:
+			lcdClear();
+			lcdMessage("select mode:\n~ Datum & Zeit");
+			do {
+				if(lcdButtonPressed(SELECT)) {
+					lcdClear();
+					time_t rawtime;
+					struct tm * timeinfo;
+					time(&rawtime);
+					timeinfo=localtime(&rawtime);
+					char old='a', new='b';
+					int n=32;
+					char temp[n];
+					while(1) {
+						old=new;
+						time(&rawtime);
+						timeinfo=localtime(&rawtime);
+						strftime(temp, n, "%a %b %d %Y\n%H:%M", timeinfo);
+						new=temp[20];
+						if(old!=new) {
+							lcdClear();
+							lcdMessage(temp);
+						}
+						if(lcdButtonPressed(RIGHT)) break;
+					}
+				}
+				if(lcdButtonPressed(RIGHT)) {
+					if(num==ctr-1) textMode(0);
+					else textMode(num+1);
+				}
+				if(lcdButtonPressed(LEFT)) {
+					if(num==0) textMode(ctr-1);
+					else textMode(num-1);
+				}
+			} while(interrupt2()!=1);
+			break;
+		case 1:
+			lcdClear();
+			lcdMessage("select mode:\n~ mode 1");
+			while(interrupt2()!=1) {
+				if(lcdButtonPressed(SELECT)) {
+					lcdClear();
+					lcdMessage("Mode 1");
+					//mode1();
+				}
+				if(lcdButtonPressed(RIGHT)) {
+					if(num==ctr-1) textMode(0);
+					else textMode(num+1);
+				}
+				if(lcdButtonPressed(LEFT)) {
+					if(num==0) textMode(ctr-1);
+					else textMode(num-1);
+				}
+			}
+			break;
+	}
+}
+
 int main(void)
 { 
-	lcdSetup(ADDR, 0);
+	lcdSetup(ADDR, 1);
 	/* i2c Address an busnum <- 0 (rev 1) | 1 (rev 2) */
 	lcdBacklight(ON);
 	lcdClear();
 	
+	initMode();
 	
-	char* text0 = "Adafruit RGB LCD\nPlate w/Keypad!";
-	char* text1 = "Hallo\nWelt";
-	//char* text2 = "T e x t 2\nT e x t 2";
-	char* text3 = "01234656789!§$%/\n'*+#~-.,<>|";
-	char* text4 = "abcdefghijklmn\nopqrstuvwxyz";
-
-	lcdMessage(text0);
-	
-	while(1) {
-		if(lcdButtonPressed(UP)) {
-			lcdClear();
-			lcdMessage(text1);
-		}
-		else if(lcdButtonPressed(DOWN)) {
-			lcdClose();
-		}	
-		else if(lcdButtonPressed(RIGHT)) {
-			lcdClear();
-			lcdMessage(text3);
-		}	
-		else if(lcdButtonPressed(LEFT)) {
-			lcdClear();
-			lcdMessage(text4);
-		}
-		else if(lcdButtonPressed(SELECT)) {
-			lcdClear();
-			lcdMessage(text0);
-		}
-	}
-
     return 0;
 } 

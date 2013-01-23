@@ -29,12 +29,12 @@ __u8 pin_rs = 15;
 __u8 pin_e = 13;
 __u8 pin_rw = 14;
 __u8 pin_db[4] = {12,11,10,9};
-__u8 displaycontrol, displayfunction, displaymode, numlines, currline;
+__u8 displaycontrol, displayfunction, displaymode, numlines=2, currline;
 
 void lcdPulseEnable()
 {
 	mcpOutput(pin_e, 1);
-	usleep(20000);
+	usleep(2000);
 	mcpOutput(pin_e, 0);
 }
 
@@ -119,7 +119,7 @@ void lcdBacklight(__u8 color)
 void lcdClear(void)
 {
 	lcdWriteBits(LCD_CLEARDISPLAY,0);
-	usleep(10000);
+	usleep(2000);
 }
 
 void lcdBegin(__u8 lines)
@@ -175,7 +175,13 @@ void lcdNoBlink(void)
 	lcdWriteBits(LCD_DISPLAYCONTROL | displaycontrol,0);
 }
 
-void lcdDisplayLeft(void)
+void lcdBlink(void)
+{
+	displaycontrol |= LCD_BLINKON;
+	lcdWriteBits(LCD_DISPLAYCONTROL | displaycontrol,0);
+}
+
+void lcdScrollDisplayLeft(void)
 {
 	lcdWriteBits(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT,0);
 }

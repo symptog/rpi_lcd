@@ -160,12 +160,14 @@ void mcpOutput(__u8 pin, __u8 value)
  * returns the state of the input
  * 
  */
+
 __u8 mcpInput(__u8 pin)
 {
 	__u16 value = rpiI2cRead16(MCP23017_GPIOA);
 	__u16 temp = value >> 8;
 	value <<= 8;
 	value |= temp;
+	
 	return value & (1 << pin);
 }
 
