@@ -29,4 +29,4 @@ Using any other i2c device:
 Release notes:
 
 - removed smbus.* files and includes
-+ using smbus from <i2c-dev.h>
++ using smbus from i2c-dev.h
