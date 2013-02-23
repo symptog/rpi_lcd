@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "lcd.c"
 
@@ -82,10 +83,13 @@ void initMode(void)
 }
 
 void textMode(int num){
+	char szHost[128];
+	gethostname(szHost, sizeof(szHost));
 	switch(num) {
 		case 0:
 			lcdClear();
-			lcdMessage("select mode:\n~ Datum & Zeit");
+			lcdMessage(szHost);
+			lcdMessage("\n~ Date & Time");
 			do {
 				if(lcdButtonPressed(SELECT)) {
 					lcdClear();
@@ -121,7 +125,8 @@ void textMode(int num){
 			break;
 		case 1:
 			lcdClear();
-			lcdMessage("select mode:\n~ mode 1");
+			lcdMessage(szHost);
+			lcdMessage("\n~ Mode 1");
 			while(interrupt2()!=1) {
 				if(lcdButtonPressed(SELECT)) {
 					lcdClear();
