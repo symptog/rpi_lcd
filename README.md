@@ -6,6 +6,11 @@ raspberry_pi_adafruit_charlcdplate_c
 
 Tested on Rasbian
 
+Testing:
+
+- $ make lcdtest
+- $ sudo ./lcdtest
+
 Requirements:
 - $ sudo apt-get install i2c-tools libi2c-dev
 
