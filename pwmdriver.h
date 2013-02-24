@@ -53,7 +53,7 @@
 #define ALLLED_OFF_H	0xFD
 
 void pwmSetup(__u8, __u8);
-void pwmSetPWMFreq(__u8);
+void pwmSetPWMFreq(float_t);
 void pwmSetPWM(__u8, __s16, __s16);
 void servosSetup();
 void servosSetSpeeds(__s16, __s16);
