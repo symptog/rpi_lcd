@@ -72,7 +72,7 @@ void servosSetSpeeds(__s16 left, __s16 right)
 {
 	right = -right;
 	
-	if(left >= 5 && left <= 5)
+	if(left >= -5 && left <= 5)
 		left = 0;
 	else if(left < -100)
 		left = 400-200;
@@ -81,7 +81,7 @@ void servosSetSpeeds(__s16 left, __s16 right)
 	else
 		left = 400 + (left*2);
 	
-	if(right >= 5 && right <= 5)
+	if(right >= -5 && right <= 5)
 		right = 0;
 	else if(right < -100)
 		right = 404-200;
