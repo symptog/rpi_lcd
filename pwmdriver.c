@@ -22,6 +22,7 @@
  * 
  */
 
+#include <math.h>
 
 #include "pwmdriver.h"
 
