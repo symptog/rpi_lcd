@@ -31,19 +31,21 @@ void pwmSetup(__u8 addr, __u8 busnum)
 	rpiI2cWrite(MODE1, 0x00);
 }
 
-void pwmSetPWMFreq(__u8 freq)
+void pwmSetPWMFreq(float_t freq)
 {
 	float_t prescaleval = 25000000.0;
 	prescaleval /= 4096.0;
-	prescaleval /= float_t(freq);
+	prescaleval /= freq;
 	prescaleval -= 1.0;
-	float_t prescale = floorf(prescaleval + 0.5);
+	float_t prescale;
+	prescale = floorf(prescaleval + 0.5);
 	
 	__u8 oldmode = rpiI2cRead8(MODE1);
 	__u8 newmode = (oldmode & 0x7F) | 0x10;
 	
 	rpiI2cWrite(MODE1, newmode);
-	rpiI2cWrite(PRESCALE, __u8(floorf(prescale)));
+	__u8 pre_scale = floorf(prescale);
+	rpiI2cWrite(PRESCALE, pre_scale);
 	rpiI2cWrite(MODE1, oldmode);
 	usleep(500);
 	rpiI2cWrite(MODE1, oldmode | 0x80);
