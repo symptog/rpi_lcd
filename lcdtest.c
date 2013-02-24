@@ -41,7 +41,7 @@
 int main(void)
 { 
 	lcdSetup(ADDR, 1);
-	/* i2c Address an busnum <- 0 (rev 1) | 1 (rev 2) */
+	/* i2c Address and busnum <- 0 (rev 1) | 1 (rev 2) */
 	lcdBacklight(ON);
 	lcdClear();
 

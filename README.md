@@ -33,5 +33,7 @@ Using any other i2c device:
 
 Release notes:
 
++ added pwmdriver.h/.c to support adafruits pwmdriver board (untested)
+------------------------------------
 - removed smbus.* files and includes
 + using smbus from i2c-dev.h
