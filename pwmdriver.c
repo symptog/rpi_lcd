@@ -2,7 +2,7 @@
  * pwmdriver.c
  * 
  * Created by Tobias Gall <toga@tu-chemnitz.eu>
- * Based on Adafruit's python code for CharLCDPlate
+ * Based on Adafruit's python code for PCA9685 16-Channel PWM Servo Driver
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ void servosSetup()
 	rpiI2cWrite(LED1_ON_H, 0x00);
 }
 
-void servosSetSeeds(__s16 left, __s16 right)
+void servosSetSpeeds(__s16 left, __s16 right)
 {
 	right = -right;
 	

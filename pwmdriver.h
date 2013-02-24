@@ -2,7 +2,7 @@
  * pwmdriver.h
  * 
  * Created by Tobias Gall <toga@tu-chemnitz.eu>
- * Based on Adafruit's python code for CharLCDPlate
+ * Based on Adafruit's python code for PCA9685 16-Channel PWM Servo Driver
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,6 @@ void pwmSetup(__u8, __u8);
 void pwmSetPWMFreq(__u8);
 void pwmSetPWM(__u8, __s16, __s16);
 void servosSetup();
-void servosSetSeeds(__s16, __s16);
+void servosSetSpeeds(__s16, __s16);
 
 #endif
